@@ -154,10 +154,8 @@ while True:
                 n_steps=0
             time.sleep(0.1)
 
-        dispense=False
         pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
-        
-    
+            
     elif dispense: #here we use the scale
         
 
