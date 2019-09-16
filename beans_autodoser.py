@@ -45,6 +45,9 @@ def stop(event):
     global dispense
     global manual_mode
     
+    time.sleep(0.1)
+    touchphat.led_off("Back")
+    
     dispense=False
     manual_mode=False
 
@@ -58,6 +61,8 @@ def stop_release(event):
 def dose_A(event):
     print (event.name)
     global target_weight
+    global manual_mode
+    manual_mode=False
     
     target_weight=10
     time.sleep(0.1)
@@ -74,6 +79,8 @@ def dose_A_release(event):
 def dose_B(event):
     print (event.name)
     global target_weight
+    global manual_mode
+    manual_mode=False
     
     target_weight=20
     time.sleep(0.1)
