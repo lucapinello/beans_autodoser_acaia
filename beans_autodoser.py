@@ -83,7 +83,7 @@ def dose_C(event):
     print (event.name)
     global target_weight
     
-    target_weight=100
+    target_weight=1000
     time.sleep(0.1)
     touchphat.led_on("C")
     touchphat.led_off("A")
@@ -97,10 +97,17 @@ def dose_C_release(event):
 @touchphat.on_touch("D")
 def dose_D(event):
     print (event.name)
-    global target_weight
-    
-    target_weight=5000
+    touchphat.led_on("D")
+    touchphat.led_off("A")
+    touchphat.led_off("B")
+    touchphat.led_off("C")
     time.sleep(0.1)
+    sb.call('sudo shutdown -h now',shell=True)
+    while True:
+    	for led in range(1,7):
+        	touchphat.led_on(led)
+        	time.sleep(0.25)
+        	touchphat.led_off(led)
     touchphat.led_on("D")
     touchphat.led_off("A")
     touchphat.led_off("B")
