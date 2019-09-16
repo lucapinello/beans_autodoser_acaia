@@ -181,13 +181,13 @@ while True:
                     direction=direction*-1
                     n_steps=0
 
-                time.sleep(0.05)
+                #time.sleep(0.05)
                 current_weight=scale.weight
 
 
             pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
             
-            if scale.device and dispense is False:
+            if scale.device:
                 scale.disconnect()
             
             dispense=False
