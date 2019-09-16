@@ -28,7 +28,7 @@ for led in range(1,7):
 @touchphat.on_touch("Enter")
 def start(event):
     
-    print event.name, target_weight
+    print (event.name, target_weight)
     global dispense
     dispense=True
     touchphat.led_on("Enter")
@@ -36,19 +36,19 @@ def start(event):
 
 @touchphat.on_release("Enter")
 def start_release(event):
-    print 'release start'
+    print ('release start')
     touchphat.led_off("Enter")     
     
 @touchphat.on_touch("Back")
 def stop(event):
-    print event.name
+    print (event.name)
     global dispense
     dispense=False
 
 
 @touchphat.on_touch("A")
 def dose_A(event):
-    print event.name
+    print (event.name)
     global target_weight
     
     target_weight=10
@@ -64,7 +64,7 @@ def dose_A_release(event):
 
 @touchphat.on_touch("B")
 def dose_B(event):
-    print event.name
+    print (event.name)
     global target_weight
     
     target_weight=20
@@ -80,7 +80,7 @@ def dose_B_release(event):
  
 @touchphat.on_touch("C")
 def dose_C(event):
-    print event.name
+    print (event.name)
     global target_weight
     
     target_weight=100
@@ -96,7 +96,7 @@ def dose_C_release(event):
     
 @touchphat.on_touch("D")
 def dose_D(event):
-    print event.name
+    print (event.name)
     global target_weight
     
     target_weight=5000
@@ -126,7 +126,7 @@ while True:
             scale.tare()
             time.sleep(0.5)
         except:
-            print 'Scale not available'
+            print ('Scale not available')
             touchphat.led_off("Enter")
             continue
 
@@ -148,14 +148,21 @@ while True:
         tolerance=0.15
 
 
-        print 'START'   
+        print ('START')   
         try:
             while current_weight<(target_weight-tolerance) and dispense and scale.device:
                     
                 if scale.device.waitForNotifications(1.0):
+                    
+                    current_weight=scale.weight
+                    
+                    if current_weight is None:
+                        current_weight=0.0
+                        continue
+                        
+                        
                     n_steps+=1
-                    #current_weight=scale.weight
-
+                    
                     if current_weight<target_weight-2:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[0])
                     elif current_weight<=target_weight-1:
@@ -165,7 +172,7 @@ while True:
 
 
                 if n_steps==steps_per_direction:
-                    #print current_weight,direction
+                    #print (current_weight,direction)
                     if direction==1:
                         current_speeds=current_speeds_acw
                     else:
@@ -179,10 +186,14 @@ while True:
 
 
             pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
+            
+            if scale.device and dispense is False:
+                scale.disconnect()
+            
             dispense=False
 
         except Exception as e:
-            print e
+            print (e)
             dispense=False
 
         finally:
@@ -190,7 +201,7 @@ while True:
             touchphat.led_off("Enter")
             dispense=False
     else:
-        time.sleep(0.2)
+        time.sleep(0.1)
         
         
         
