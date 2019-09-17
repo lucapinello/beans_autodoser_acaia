@@ -26,17 +26,15 @@ pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)
         
 @touchphat.on_touch("Enter")
 def start(event):
-    
-    print (event.name, target_weight)
+    print (event.name, target_weight, manual_mode)
     global dispense
     dispense=True
     touchphat.led_on("Enter")
-   
 
 @touchphat.on_release("Enter")
 def start_release(event):
     print ('release start')
-    touchphat.led_off("Enter")     
+    touchphat.led_on("Enter")     
     
 @touchphat.on_touch("Back")
 def stop(event):
@@ -49,7 +47,6 @@ def stop(event):
     touchphat.led_off("Back")
     
     dispense=False
-    manual_mode=False
 
 @touchphat.on_release("Back")
 def stop_release(event):
@@ -100,7 +97,6 @@ def dose_C(event):
     global manual_mode
     manual_mode=True
     
-    #target_weight=100
     time.sleep(0.1)
     touchphat.led_on("C")
     touchphat.led_off("A")
@@ -145,7 +141,9 @@ while True:
     
     if dispense and manual_mode: #this is helpful to unload the dispenser
         
-        while manual_mode:
+        touchphat.led_on("Enter")
+        
+        while dispense:
             
             n_steps+=1
             pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[0])
@@ -162,10 +160,12 @@ while True:
             time.sleep(0.1)
 
         pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
+        touchphat.led_off("Enter")
             
     elif dispense: #here we use the scale
         
-
+        touchphat.led_on("Enter")
+        
         try:
             scale=AcaiaScale(mac=ACAIA_MAC)
             scale.connect()
@@ -220,6 +220,7 @@ while True:
             
             if scale.device:
                 scale.disconnect()
+                del scale
             
             dispense=False
 
