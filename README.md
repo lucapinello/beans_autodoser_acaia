@@ -1,5 +1,9 @@
 # beans_autodoser_acaia
 
+
+[![See it in action!](http://img.youtube.com/vi/6SgFjHs8aTQ/0.jpg)](http://www.youtube.com/watch?v=6SgFjHs8aTQ "Beans doser with Acaia Scale")
+
+
 Software Dependencies:
 
 Python3, touchphat, numpy, pyacaia and https://github.com/edwios/bluepy/tree/master/bluepy.
@@ -18,6 +22,8 @@ Run with:  python3 beans_autodoser.py
 Hardware list:
 
 Food dispenser with base https://www.amazon.com/dp/B000LFCLJ2
+
+Acaia Scale
 
 From Adafruit:
 - Pimoroni Touch pHAT for Raspberry Pi Zero[ID:3472] 
