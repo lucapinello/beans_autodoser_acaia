@@ -125,10 +125,10 @@ def dose_D_release(event):
 stop_speed=1490
 target_weight=10
 steps_per_direction_no_weight=15
-steps_per_direction=30
+steps_per_direction=70
 tolerance=0.15
-current_speeds_cw=[1100,1250,1400]
-current_speeds_acw=[1800,1700,1550]
+current_speeds_cw=[1000,1250,1400]
+current_speeds_acw=[2000,1700,1550]
 current_speeds=current_speeds_cw
 
 manual_mode=False
@@ -199,7 +199,7 @@ while True:
                     
                     if current_weight<target_weight-1:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[0])
-                    elif current_weight<=target_weight-0.5:
+                    elif current_weight<=target_weight-0.8:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[1])
                     else:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[2])
