@@ -10,16 +10,30 @@ Software Dependencies:
 
 Python3, touchphat, numpy, pyacaia and https://github.com/edwios/bluepy/tree/master/bluepy.
 
+```
 sudo apt-get install python3-numpy python3-pip 
+
 curl https://get.pimoroni.com/touchphat  | bash
+
 git clone https://github.com/edwios/bluepy/tree/master/bluepy
+
 sudo pip3 install pyacaia
+
 cd bluepy
+
 sudo python setup.py install
+
 cd
+
 git clone git@github.com:lucapinello/beans_autodoser_acaia.git
+
 cd beans_autodoser_acaia
-Run with:  python3 beans_autodoser.py 
+```
+
+Run with:  
+```
+python3 beans_autodoser.py 
+```
 
 Hardware list:
 
