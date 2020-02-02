@@ -5,11 +5,27 @@ import random
 import pigpio
 import numpy as np
 import touchphat
+import json
 from pyacaia import AcaiaScale
 
 GPIO_PIN=15
 ACAIA_MAC='00:1C:97:17:FD:97'
-stop_speed=1490
+
+
+with open('config.json', 'r') as f:
+    config = json.load(f)
+    stop_speed=config['stop_speed']
+
+
+fast_cw=stop_speed-500
+mid_cw=stop_speed-200
+slow_cw=stop_speed-30
+
+fast_acw=stop_speed+500
+mid_acw=stop_speed+200
+slow_acw=stop_speed+40
+
+
 target_weight=10
 
 sb.call('sudo pigpiod',shell=True)
@@ -121,17 +137,6 @@ def dose_D(event):
 def dose_D_release(event):
     touchphat.led_on("D")
 
-
-stop_speed=1480
-
-fast_cw=stop_speed-500
-mid_cw=stop_speed-200
-slow_cw=stop_speed-30
-
-fast_acw=stop_speed+500
-mid_acw=stop_speed+200
-slow_acw=stop_speed+40
-    
     
     
 target_weight=10
@@ -171,7 +176,24 @@ while True:
                 n_steps=0
             
             time.sleep(0.1)
+        
+        
+        #we need this to update things on the fly
+        with open('config.json', 'r') as f:
+            config = json.load(f)
+            stop_speed=config['stop_speed']
+            fast_cw=stop_speed-500
+            mid_cw=stop_speed-200
+            slow_cw=stop_speed-30
 
+            fast_acw=stop_speed+500
+            mid_acw=stop_speed+200
+            slow_acw=stop_speed+40
+
+            current_speeds_cw=[fast_cw,mid_cw,slow_cw]
+            current_speeds_acw=[fast_acw,mid_acw,slow_acw]
+            current_speeds=current_speeds_cw
+        
         pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
         touchphat.led_off("Enter")
             
@@ -227,8 +249,24 @@ while True:
                     n_steps=0
 
                 current_weight=scale.weight
+            
+            #we need this to update things on the fly
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+                stop_speed=config['stop_speed']
+                fast_cw=stop_speed-500
+                mid_cw=stop_speed-200
+                slow_cw=stop_speed-30
 
+                fast_acw=stop_speed+500
+                mid_acw=stop_speed+200
+                slow_acw=stop_speed+40
 
+                current_speeds_cw=[fast_cw,mid_cw,slow_cw]
+                current_speeds_acw=[fast_acw,mid_acw,slow_acw]
+                current_speeds=current_speeds_cw
+                
+                
             pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
             
             if scale.device:
@@ -242,6 +280,22 @@ while True:
             dispense=False
 
         finally:
+            #we need this to update things on the fly
+            with open('config.json', 'r') as f:
+                config = json.load(f)
+                stop_speed=config['stop_speed']
+                fast_cw=stop_speed-500
+                mid_cw=stop_speed-200
+                slow_cw=stop_speed-30
+
+                fast_acw=stop_speed+500
+                mid_acw=stop_speed+200
+                slow_acw=stop_speed+40
+
+                current_speeds_cw=[fast_cw,mid_cw,slow_cw]
+                current_speeds_acw=[fast_acw,mid_acw,slow_acw]
+                current_speeds=current_speeds_cw
+            
             pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)  
             touchphat.led_off("Enter")
             dispense=False
