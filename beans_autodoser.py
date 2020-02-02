@@ -122,13 +122,24 @@ def dose_D_release(event):
     touchphat.led_on("D")
 
 
-stop_speed=1490
+stop_speed=1480
+
+fast_cw=stop_speed-500
+mid_cw=stop_speed-200
+slow_cw=stop_speed-30
+
+fast_acw=stop_speed+500
+mid_acw=stop_speed+200
+slow_acw=stop_speed+40
+    
+    
+    
 target_weight=10
 steps_per_direction_no_weight=15
 steps_per_direction=70
 tolerance=0.15
-current_speeds_cw=[1000,1250,1400]
-current_speeds_acw=[2000,1700,1550]
+current_speeds_cw=[fast_cw,mid_cw,slow_cw]
+current_speeds_acw=[fast_acw,mid_acw,slow_acw]
 current_speeds=current_speeds_cw
 
 manual_mode=False
