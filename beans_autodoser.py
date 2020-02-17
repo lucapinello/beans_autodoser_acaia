@@ -157,11 +157,11 @@ with open('config.json', 'r') as f:
 
 fast_cw=500
 mid_cw=200
-slow_cw=80
+slow_cw=60
 
 fast_acw=500
 mid_acw=200
-slow_acw=80
+slow_acw=60
 steps_per_direction=60
 steps_per_direction_no_weight=15
 
@@ -259,9 +259,9 @@ while True:
                         
                     n_steps+=1
                     
-                    if current_weight<target_weight-1.5:
+                    if current_weight<target_weight-2.0:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[0])
-                    elif current_weight<=target_weight-1.0:
+                    elif current_weight<=target_weight-1.5:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[1])
                     else:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[2])
@@ -313,7 +313,6 @@ while True:
             touchphat.led_off("Enter")
             dispense=False
     else:
-        time.sleep(0.1)
         #we need this to update things on the fly
         with open('config.json', 'r') as f:
             config = json.load(f)
@@ -326,6 +325,7 @@ while True:
             current_speeds=current_speeds_cw
         
         pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)
+        time.sleep(0.1)
         
         
         
