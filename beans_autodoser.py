@@ -27,6 +27,8 @@ with open('config.json', 'r') as f:
             config = json.load(f)
             stop_speed=config['stop_speed']
             
+off_pressed=False            
+            
 pi.set_servo_pulsewidth(GPIO_PIN, stop_speed)        
         
 @touchphat.on_touch("Enter")
@@ -49,6 +51,7 @@ def stop(event):
     global manual_mode
     global stop_speed
     global calibration_idx
+    global off_pressed
     
     calibration_stop_speed=[1470,1480,1490,1500]
     
@@ -64,6 +67,7 @@ def stop(event):
     touchphat.led_off("Back")
     
     dispense=False
+    off_pressed=False
 
 @touchphat.on_release("Back")
 def stop_release(event):
@@ -127,12 +131,19 @@ def dose_C_release(event):
 @touchphat.on_touch("D")
 def dose_D(event):
     print (event.name)
+    
+    global off_pressed
+    
     touchphat.led_on("D")
     touchphat.led_off("A")
     touchphat.led_off("B")
     touchphat.led_off("C")
     time.sleep(0.1)
-    sb.call('sudo shutdown -h now',shell=True)
+    
+    if off_pressed:
+        sb.call('sudo shutdown -h now',shell=True)
+    
+    off_pressed=True
 
 @touchphat.on_release("D")
 def dose_D_release(event):
