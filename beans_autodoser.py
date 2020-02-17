@@ -82,7 +82,7 @@ def dose_A(event):
     global manual_mode
     manual_mode=False
     
-    target_weight=10
+    target_weight=8
     time.sleep(0.1)
     touchphat.led_on("A")
     touchphat.led_off("B")
@@ -169,7 +169,7 @@ tolerance=0.08
 
 calibration_idx=0
     
-target_weight=10
+target_weight=8
 
 
 current_speeds_cw=[stop_speed-fast_cw,stop_speed-mid_cw,stop_speed-slow_cw]
