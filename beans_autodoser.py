@@ -82,7 +82,7 @@ def dose_A(event):
     global manual_mode
     manual_mode=False
     
-    target_weight=8
+    target_weight=9
     time.sleep(0.1)
     touchphat.led_on("A")
     touchphat.led_off("B")
@@ -100,7 +100,7 @@ def dose_B(event):
     global manual_mode
     manual_mode=False
     
-    target_weight=20
+    target_weight=19.5
     time.sleep(0.1)
     touchphat.led_on("B")
     touchphat.led_off("A")
@@ -156,20 +156,20 @@ with open('config.json', 'r') as f:
 
 
 fast_cw=500
-mid_cw=200
-slow_cw=60
+mid_cw=300
+slow_cw=100
 
 fast_acw=500
-mid_acw=200
-slow_acw=60
-steps_per_direction=60
+mid_acw=280
+slow_acw=100
+steps_per_direction=80
 steps_per_direction_no_weight=15
 
 tolerance=0.08
 
 calibration_idx=0
     
-target_weight=8
+target_weight=9
 
 
 current_speeds_cw=[stop_speed-fast_cw,stop_speed-mid_cw,stop_speed-slow_cw]
@@ -261,7 +261,7 @@ while True:
                     
                     if current_weight<target_weight-2.0:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[0])
-                    elif current_weight<=target_weight-1.5:
+                    elif current_weight<=target_weight-1.2:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[1])
                     else:
                         pi.set_servo_pulsewidth(GPIO_PIN, current_speeds[2])
